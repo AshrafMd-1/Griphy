@@ -1,9 +1,9 @@
 (() => {
     console.log("Content script loaded.");
 
-    const sampleUsers = ["username", "user_name", "user", "user_id", "login", "email", "u", "roll", "roll_no", "roll-number"];
+    const sampleUsers = ["username", "user_name", "user", "user_id", "email", "u", "roll", "roll_no", "roll-number"];
     const samplePasswords = ["password", "pass", "pwd", "passcode", "passphrase", "p", "pass_id"];
-    const sampleSubmit = ["submit", "login", "sign-in", "signin", "sign_in", "log_in", "log-in", "enter", "signup", "sign_up", "sign-up", "register", "register_now"];
+    const sampleSubmit = ["submit", "login", "sign-in", "signin", 'continue', "sign_in", "log_in", "log-in", "signup", "sign_up", "sign-up", "register", "register_now"];
 
     const getMatchingElement = (nodes, sampleArray, type, searchInnerHTML = false) => {
         for (let node of nodes) {
@@ -23,7 +23,7 @@
     const getSubmit = (nodes) => {
         let element = document.querySelector("input[type='submit']") || document.querySelector("button[type='submit']");
         const allButtons = document.getElementsByTagName("button");
-        if (element == null) {
+        if (!element) {
             element = getMatchingElement(nodes, sampleSubmit, "name") ||
                 getMatchingElement(nodes, sampleSubmit, "id") ||
                 getMatchingElement(nodes, sampleSubmit, "class") ||
@@ -45,7 +45,8 @@
             getMatchingElement(nodes, samplePasswords, "id") ||
             getMatchingElement(nodes, samplePasswords, "class") ||
             getMatchingElement(nodes, samplePasswords, "placeholder") ||
-            getMatchingElement(nodes, samplePasswords, "autocomplete");
+            getMatchingElement(nodes, samplePasswords, "autocomplete") ||
+            getMatchingElement(nodes, samplePasswords, "type");
 
         return {usernameEl, passwordEl};
     }

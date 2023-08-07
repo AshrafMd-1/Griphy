@@ -8,18 +8,35 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     (tab.url) ? tabUrl = tab.url : console.log('No url found');
 });
 
+// Listen for the browser window to be closed
+chrome.windows.onRemoved.addListener(windowId => {
+    // Set loggedIn to false when the browser window is closed
+    setLoggedIn(false);
+});
+
+// Function to set loggedIn status in local storage
+function setLoggedIn(loggedInValue) {
+    loggedIn = loggedInValue;
+    chrome.storage.local.set({loggedIn: loggedInValue});
+}
+
+// Function to set password in local storage
+function setPassword(passwordValue) {
+    password = passwordValue;
+    chrome.storage.local.set({password: passwordValue});
+}
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
         if (tabs[0] && tabs[0].url && tabs[0].id) {
             tabUrl = tabs[0].url;
             tabId = tabs[0].id;
-            // use `url` here inside the callback because it's asynchronous!
         } else {
             console.log('No url found');
         }
     });
     const websiteTopLevel = tabUrl.split('/')[2];
+
     if (request.type === "check") {
         console.log("Checking if logged in", loggedIn);
         sendResponse(loggedIn);
@@ -34,18 +51,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
             chrome.storage.sync.set({[request.password]: JSON.stringify(existingData)}, function () {
                 console.log("Registered");
-                loggedIn = true;
-                password = request.password;
+                setLoggedIn(true);
+                setPassword(request.password);
                 sendResponse(loggedIn);
             });
         });
     } else if (request.type === "login") {
         console.log("Logging in");
         chrome.storage.sync.get([request.password], function (result) {
-            (result[request.password] === undefined) ? loggedIn = false : loggedIn = true;
+            loggedIn = (result[request.password] !== undefined);
             (loggedIn) ? console.log("Logged in") : console.log("Not logged in");
             console.log(loggedIn);
-            password = request.password;
+            setPassword(request.password);
             sendResponse(loggedIn); // Send response synchronously here
         });
     } else if (request.type === "save") {
@@ -120,8 +137,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         console.log("Uploading data");
         sendResponse(currentUpload);
     }
-// Return true to indicate that the response will be sent asynchronously
-    return true;
-})
-;
 
+    return true;
+});
