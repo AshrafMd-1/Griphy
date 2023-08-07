@@ -1,0 +1,97 @@
+
+body {
+    margin: 8px;
+    border-radius: 20px;
+    background-color: aliceblue;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 400px;
+    height: fit-content;
+}
+
+h2 {
+    font-size: 30px;
+    margin: 0;
+}
+
+p {
+    font-size: 20px;
+    margin: 10px 0 10px 0;
+}
+
+.status p {
+    font-size: 20px;
+    margin: 10px 0 10px 0;
+}
+
+.status span {
+    font-size: 21px;
+    margin: 10px 0 10px 0;
+    font-weight: 700;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button, a {
+    margin: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#clear {
+    background-color: #dc3545;
+}
+
+.img {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2px;
+    margin: 5px;
+
+}
+
+img {
+    margin: 2px;
+    width: 100px;
+    height: 100px;
+}
+
+p {
+    margin: 0;
+}
+
+.error p {
+    color: red;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+#register:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+a {
+    display: inline-block;
+    background: blueviolet;
+    text-decoration: none;
+}

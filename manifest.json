@@ -1,0 +1,38 @@
+{
+  "name": "Griphy",
+  "version": "0.2.0",
+  "description": "A Graphical Password Manager",
+  "permissions": [
+    "storage",
+    "tabs",
+    "unlimitedStorage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "assets/lock.png",
+      "24": "assets/lock.png",
+      "32": "assets/lock.png"
+    },
+    "default_title": "Griphy",
+    "default_popup": "popup/home/home.html"
+  },
+  "manifest_version": 3
+}
