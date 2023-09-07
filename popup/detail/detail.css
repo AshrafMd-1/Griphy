@@ -1,7 +1,7 @@
 body {
     margin: 8px;
     border-radius: 20px;
-    background: aliceblue;
+    background: cornsilk;
 }
 
 .container {
@@ -38,6 +38,7 @@ h2 {
     margin: 2px 0;
     border-radius: 20px;
     padding: 4px;
+    background: rgba(255, 229, 229, 0.2);
 }
 
 .user {
